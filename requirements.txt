@@ -1,0 +1,10 @@
+fastapi~=0.115.14
+pandas~=2.3.0
+nltk~=3.9.1
+scikit-learn~=1.7.0
+xgboost~=3.0.2
+trnlp~=0.2.3a0
+uvicorn
+jinja2
+trnlp
+python-multipart

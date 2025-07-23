@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Türkçe Cümle Sınıflandırıcı</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="p-4 mb-5 rounded" style="background-color: rgba(0, 0, 0, 0.6);">
+  <h1 class="text-center fw-bold text-white display-4 text-shadow">
+      Türkçe Cümle Sınıflandırıcı
+  </h1>
+  <p class="lead text-white text-center fw-bold">
+    Bu program kullanıcıdan aldığı Türkçe cümleleri duygu analizi (sentiment analysis) yaparak
+      olumlu, olumsuz veya nötr şeklinde sınıflandırır. Program, metinlerin arka planındaki
+      duygusal tonu XGBoost makine öğrenimi algoritması kullanarak analiz eder ve sonucu gösterir.
+  </p>
+</div>
+
+<div class="form-box">
+    <form action="/xgboost_classifier" method="post">
+      <div class="mb-3">
+        <label for="word" class="form-label">Sınıflandırılacak Cümle</label>
+        <input type="text" class="form-control" id="word" name="word" placeholder="Cümle Girin!" required>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Sınıflandır</button>
+      </div>
+      {% if prediction_label is not none %}
+        {% if prediction_label == "olumlu" %}
+            <div class="alert alert-success text-center mt-4">
+            Sınıflandırma Sonucu: <strong>{{ prediction_label }}</strong>
+            </div>
+        {% endif %}
+        {% if prediction_label == "olumsuz" %}
+            <div class="alert alert-danger text-center mt-4">
+            Sınıflandırma Sonucu: <strong>{{ prediction_label }}</strong>
+            </div>
+        {% endif %}
+        {% if prediction_label == "nötr" %}
+            <div class="alert alert-secondary text-center mt-4">
+            Sınıflandırma Sonucu: <strong>{{ prediction_label }}</strong>
+            </div>
+        {% endif %}
+      {% endif %}
+    </form>
+</div>
+
+</body>
+</html>
