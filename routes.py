@@ -8,7 +8,6 @@ import pickle
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
-# Modeli, vectorizer'ı ve encoder'ı yükle
 with open("xgboost_model.pkl", "rb") as f:
     model = pickle.load(f)
 
@@ -24,11 +23,9 @@ def homepage(request: Request, prediction_label: str = None):
 
 @router.post("/xgboost_classifier")
 def xgboost_classifier(word: str = Form(...)):
-    # Temizle, vektöre çevir, tahmin et
     new_comment_clean = clear_and_lemmatize(word)
     vector = vectorizer.transform([new_comment_clean])
 
-    #vektorel = vectorizer.transform([word])
     pred = model.predict(vector)
     prediction_label = le.inverse_transform(pred)
 
@@ -38,4 +35,5 @@ def xgboost_classifier(word: str = Form(...)):
         url=f"/?prediction_label={quote_plus(prediction_label[0])}&text={quote_plus(word)}",
         status_code=303
     )
+
 
